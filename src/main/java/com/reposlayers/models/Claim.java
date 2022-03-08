@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 
 @Entity(name="claims")
@@ -32,33 +32,29 @@ public class Claim {
     @Column(name = "agent_name")
     private String agentName;
 
-    @Column(name="amount")
-    private BigDecimal amount;
-
     @Column(name = "agent_rating")
     private int agentRating;
 
-    //private LocalDateTime datetime;
+    @Column(name="amount")
+    private BigDecimal amount;
+
+    @Column(name = "datetime")
+    private Timestamp datetime;
 
     @Column(name = "country")
     private String country;
 
-
-    @Column(name = "reimbursement_id")
-    private String reimbursementid;
-
-   // @Column(name = "failure_reason")
-  //  private String failureReason;
-
-   // @Column(name = "reason")
-   // private String reason;
+    @Column(name = "state")
+    private String state;
 
     @Column(name = "approval")
-    private String approval;
+    private char approval;
+
+    @Column(name = "reimbursement_id")
+    private String reimbursementId;
 
 
-    //    @Column(name = "amount")
-//    private Integer amount;
+
 
 
 
