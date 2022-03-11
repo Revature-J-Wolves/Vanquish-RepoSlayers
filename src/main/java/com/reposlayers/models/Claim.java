@@ -18,7 +18,7 @@ public class Claim {
     private int claimId;
 
     @Column(name = "customer_id")
-    private String customerId;
+    private int customerId;
 
     @Column(name = "customer_name")
     private String customerName;
@@ -27,7 +27,7 @@ public class Claim {
     private int customerAge;
 
     @Column(name = "agent_id")
-    private String agentId;
+    private int agentId;
 
     @Column(name = "agent_name")
     private String agentName;
@@ -38,27 +38,24 @@ public class Claim {
     @Column(name = "agent_rating")
     private int agentRating;
 
-    //private LocalDateTime datetime;
+    private LocalDateTime datetime;
 
     @Column(name = "country")
     private String country;
 
 
     @Column(name = "reimbursement_id")
-    private String reimbursementid;
+    private int reimbursementid;
 
    // @Column(name = "failure_reason")
-  //  private String failureReason;
+   // private String failureReason;
 
    // @Column(name = "reason")
-   // private String reason;
+  //  private String reason;
 
     @Column(name = "approval")
     private String approval;
 
-
-    //    @Column(name = "amount")
-//    private Integer amount;
 
 
 
