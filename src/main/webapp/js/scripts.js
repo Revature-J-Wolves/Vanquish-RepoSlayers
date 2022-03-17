@@ -35,7 +35,7 @@ function getAllClaims() {
             // Create table header array
             let header = [
                 "Claim ID", 
-                "Insurance Type",  
+               // "Insurance Type",
                 "Claim Amount", 
                 "Date/Time", 
                 "Customer Name", 
@@ -67,7 +67,7 @@ function getAllClaims() {
                 let claim = claimArray[i];
                 let row = document.createElement("tr");
                 let claimId = document.createElement("td");
-                let reason = document.createElement("td");
+               // let reason = document.createElement("td");
                 let amount = document.createElement("td");
                 let datetime = document.createElement("td");
                 let customerName = document.createElement("td");
@@ -77,7 +77,7 @@ function getAllClaims() {
                 let view = document.createElement("td");
 
                 claimId.innerHTML = claim.claimId;
-                reason.innerHTML = claim.reason;
+               // reason.innerHTML = claim.reason;
                 amount.innerHTML = `$${claim.amount}`;
                 datetime.innerHTML = claim.datetime;
                 customerName.innerHTML = claim.customerName;
@@ -87,7 +87,7 @@ function getAllClaims() {
                 view.innerHTML = `<button id="viewButtons" type="button" class="btn btn-secondary" onclick="viewClaim(${claim.claimId})">View</button>`;
 
                 row.appendChild(claimId);
-                row.appendChild(reason);
+                //row.appendChild(reason);
                 row.appendChild(amount);
                 row.appendChild(datetime);
                 row.appendChild(customerName);
@@ -294,7 +294,7 @@ function getClaimsByCountry() {
                 "Over 50 Denial Rate", 
                 "Under 50 Approval Rate", 
                 "Under 50 Denial Rate",
-                "Top Insurance Reason", 
+                "Top Insurance Reason",
                 "Total # Claims"
             ];
 
