@@ -103,7 +103,7 @@ function getAllClaims() {
     }
     xhr.open("GET", "http://localhost:8080/claims", true);
     xhr.send();
-    getAgeChartData();
+    getMonthChartData();
     getTypeChartData();
 }
 
@@ -153,33 +153,26 @@ window.onclick = function(event) {
 }
 
 // ---------------------------
-// Bar Chart for Age Groups
+// Bar Chart for Claim Months
 // ---------------------------
 
-function getAgeChartData() {
+function getMonthChartData() {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             let response = JSON.parse(xhr.responseText);
-            const labels = ["0-17", "18-25", "26-35", "36-45", "46-55", "56-79", "80+"];
-            const data = [0, 0, 0, 0, 0, 0, 0];
-            for (let i = 0; i < response.length; i++) {
-                if (response[i].customerAge <= 17) {
-                    data[0]++;
-                } else if (response[i].customerAge <= 25) {
-                    data[1]++;
-                } else if (response[i].customerAge <= 35) {
-                    data[2]++;
-                } else if (response[i].customerAge <= 45) {
-                    data[3]++;
-                } else if (response[i].customerAge <= 55) {
-                    data[4]++;
-                } else if (response[i].customerAge <= 79) {
-                    data[5]++;
-                } else {
-                    data[6]++;
-                }
-            }
+
+
+
+                var labels = response.map(function(e) {
+                   return e.months;
+                });
+                var mom = response.map(function(e) {
+                   return e.claim_count;
+                });;
+
+
+
             let ctx = document.getElementById('barChart').getContext('2d');
 
             let myChart = new Chart(ctx, {
@@ -187,8 +180,8 @@ function getAgeChartData() {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: '# Of Customers Per Age Group',
-                        data: data,
+                        label: 'Claims per Month',
+                        data: mom,
                         backgroundColor: 'rgba(0, 40, 255, 0.59)',
                         borderColor: 'rgba(0, 40, 255, 1)',
                         borderWidth: 1
@@ -204,7 +197,7 @@ function getAgeChartData() {
             });
         }
     }
-    xhr.open("GET", "http://localhost:8080/claims", true);
+    xhr.open("GET", "http://localhost:8080/monthdata", true);
     xhr.send();
 }
 
@@ -421,7 +414,7 @@ function getClaimsByCountry() {
 
     xhr.open("GET", "http://localhost:8080/claims", true);
     xhr.send();
-    getAgeChartData();
+    getMonthChartData();
     getTypeChartData();
 }
 
@@ -556,6 +549,6 @@ function getClaimsByReason() {
 
     xhr.open("GET", "http://localhost:8080/claims", true);
     xhr.send();
-    getAgeChartData();
+    getMonthChartData();
     getTypeChartData();
 }
