@@ -15,8 +15,8 @@ function getAllClaims() {
             let response = JSON.parse(xhr.responseText);
 
             document.getElementById("numClaimsDiv").innerHTML = `<b>Total # Claims:</b> ${response.length}`;
-            document.getElementById("leftChart").innerHTML = "# of Claims By Age Group";
-            document.getElementById("rightChart").innerHTML = "# of Claims By Approval";
+            document.getElementById("leftChart").innerHTML = "Claims per Month";
+            document.getElementById("rightChart").innerHTML = "Average Claims filed by Hour";
 
             let x = document.getElementById("claimsTable");
             x.remove();
@@ -24,12 +24,14 @@ function getAllClaims() {
             let table = document.createElement("table");
             table.setAttribute("id", "claimsTable");
             table.setAttribute("class", "table table-striped table-bordered table-sort sortable");
+
             let thead = document.createElement("thead");
             thead.setAttribute("id", "thead");
             let tbody = document.createElement("tbody");
             tbody.setAttribute("id", "tbody");
             table.appendChild(thead);
             table.appendChild(tbody);
+
             document.getElementById("claimsDiv").appendChild(table);
 
             // Create table header array
@@ -104,7 +106,7 @@ function getAllClaims() {
     xhr.open("GET", "http://localhost:8080/claims", true);
     xhr.send();
     getMonthChartData();
-    getTypeChartData();
+    getClaimsByTime();
 }
 
 // ---------------------------
@@ -163,7 +165,6 @@ function getMonthChartData() {
             let response = JSON.parse(xhr.responseText);
 
 
-
                 var labels = response.map(function(e) {
                    return e.months;
                 });
@@ -201,67 +202,69 @@ function getMonthChartData() {
     xhr.send();
 }
 
+
 // ---------------------------
-// Pie Chart for Approvals
+// Bar Chart for Common times for claims to get filed
 // ---------------------------
 
-function getTypeChartData() {
+function getClaimsByTime() {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             let response = JSON.parse(xhr.responseText);
-            let labels = [];
-            let data = [];
-            for (let i = 0; i < response.length; i++) {
-                if (labels.indexOf(response[i].approval) == -1) {
-                    labels.push(response[i].approval);
-                    data.push(1);
-                } else {
-                    data[labels.indexOf(response[i].approval)]++;
-                }
-            }
+
+
+                var labels = response.map(function(e) {
+                   return e.hour;
+                });
+                var mom = response.map(function(e) {
+                   return e.claims;
+                });;
+
+
+
             let ctx = document.getElementById('pieChart').getContext('2d');
+
             let myChart = new Chart(ctx, {
-                type: 'pie',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: '# Of Approvals',
-                        data: data,
-                        backgroundColor: ['rgba(0, 182, 0, .75)', 'rgba(237, 20, 0, .75)'],
-                        borderColor: 'rgba(0, 0, 0, 1)',
+                        label: 'Average Claims filed by Hour',
+                        data: mom,
+                        backgroundColor: 'rgba(0, 40, 255, 0.59)',
+                        borderColor: 'rgba(0, 40, 255, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
                     scales: {
                         y: {
-                            display: false,
                             beginAtZero: true
                         }
-                    },
+                    }
                 }
             });
         }
     }
-    xhr.open("GET", "http://localhost:8080/claims", true);
+    xhr.open("GET", "http://localhost:8080/comtime", true);
     xhr.send();
 }
+
 
 // ---------------------------
 // Get Country Data 2nd Button
 // ---------------------------
 function getClaimsByCountry() {
+
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             let response = JSON.parse(xhr.responseText);
 
             document.getElementById("numClaimsDiv").innerHTML = `<b>Total # Claims:</b> ${response.length}`;
-            document.getElementById("leftChart").innerHTML = "# of Claims By Age Group";
-            document.getElementById("rightChart").innerHTML = "# of Claims By Approval";
+            document.getElementById("leftChart").innerHTML = "Agent Rating by Age";
+            document.getElementById("rightChart").innerHTML = "Average Claims by Age";
 
             let x = document.getElementById("claimsTable");
             x.remove();
@@ -414,9 +417,90 @@ function getClaimsByCountry() {
 
     xhr.open("GET", "http://localhost:8080/claims", true);
     xhr.send();
-    getMonthChartData();
-    getTypeChartData();
+    getRatingChart();
+    getClaimAgeChart();
+
 }
+
+// ---------------------------
+// Pie Chart for Average Agent Rating by Age
+// ---------------------------
+
+function getRatingChart() {
+
+
+
+            let ctx = document.getElementById('barChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ["Junior 18-25", "Middle 26-50","Senior 51+"],
+                    datasets: [{
+                        label: 'Agent Rating by Age',
+                        data: [5.85, 5.34, 5.63],
+                        backgroundColor: ['rgba(0, 182, 0, .75)', 'rgba(237, 20, 0, .75)', 'rgba(137, 100, 0, .75)'],
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            display: false,
+                            beginAtZero: true
+                        }
+                    },
+                }
+            });
+
+ }
+
+
+// ---------------------------
+// Pie Chart for Average Claims by Age
+// ---------------------------
+
+function getClaimAgeChart() {
+
+  //$('.pieChart').remove(); // this is my <canvas> element
+  //$('.bong').append('<canvas id="pieChart"><canvas>');
+  //canvas = document.querySelector('.pieChart'); // why use jQuery?
+  //ctx = canvas.getContext('2d');
+  //ctx.canvas.width = $('#graph').width(); // resize to parent width
+ // ctx.canvas.height = $('#graph').height(); // resize to parent height
+
+         // x=document.getElementById('pieChart');
+         // x.removeData();
+
+
+            let ctx = document.getElementById('pieChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ["Junior 18-25", "Middle 26-50","Senior 51+"],
+                    datasets: [{
+                        label: 'Average Claims by Age',
+                        data: [27566.71, 27338.88, 26336.38],
+                        backgroundColor: ['rgba(0, 182, 0, .75)', 'rgba(237, 20, 0, .75)', 'rgba(137, 100, 0, .75)'],
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            display: false,
+                            beginAtZero: true
+                        }
+                    },
+                }
+            });
+
+ }
 
 // ---------------------------
 // Reason Table 3rd Button
@@ -428,8 +512,8 @@ function getClaimsByReason() {
             let response = JSON.parse(xhr.responseText);
 
             document.getElementById("numClaimsDiv").innerHTML = `<b>Total # Claims:</b> ${response.length}`;
-            document.getElementById("leftChart").innerHTML = "# of Claims By Age Group";
-            document.getElementById("rightChart").innerHTML = "# of Claims By Approval";
+            document.getElementById("leftChart").innerHTML = "Reimbursement Amount per Quarter";
+            document.getElementById("rightChart").innerHTML = "Amount of Claims per Quarter";
 
             let x = document.getElementById("claimsTable");
             x.remove();
@@ -546,9 +630,79 @@ function getClaimsByReason() {
             sorttable.makeSortable(table);
         }
     }
-
     xhr.open("GET", "http://localhost:8080/claims", true);
     xhr.send();
-    getMonthChartData();
-    getTypeChartData();
+    getQuarterHighest();
+    getQuarterFrequent()
 }
+
+
+   // ---------------------------
+   // Bar Chart for Quarter Reimbursement
+   // ---------------------------
+
+   function getQuarterHighest() {
+
+               let ctx = document.getElementById('barChart').getContext('2d');
+
+               let myChart = new Chart(ctx, {
+                   type: 'bar',
+                   data: {
+                       labels: ["Q1","Q2","Q3","Q4"],
+                       datasets: [{
+                           label: 'Reimbursement Amount per Quarter',
+                           data: [35080.18,36367.44, 33369, 36532.67],
+                           backgroundColor: 'rgba(0, 40, 255, 0.59)',
+                           borderColor: 'rgba(0, 40, 255, 1)',
+                           borderWidth: 1
+                       }]
+                   },
+                   options: {
+                       scales: {
+                           y: {
+                               beginAtZero: true
+                           }
+                       }
+                   }
+               });
+   }
+
+
+// ---------------------------
+   // Bar Chart for Quarter Claim Amount
+   // ---------------------------
+
+function getQuarterFrequent() {
+
+            let ctx = document.getElementById('pieChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Q1","Q2","Q3","Q4"],
+                    datasets: [{
+                        label: 'Amount of Claims per Quarter',
+                        data: [84.25, 109, 116.33, 98.33],
+                        backgroundColor: 'rgba(0, 40, 255, 0.59)',
+                        borderColor: 'rgba(0, 40, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            display: true,
+                            beginAtZero: true
+                        }
+                    },
+                }
+            });
+
+ }
+
+
+
+
+
+
