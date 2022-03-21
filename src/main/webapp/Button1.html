@@ -11,7 +11,7 @@
     />
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <script type="text/javascript" src="js/scripts3.js" defer></script>
+    <script type="text/javascript" src="js/scripts2.js" defer></script>
     <title>Data Analytics Dashboard</title>
 </head>
 <body>
@@ -119,19 +119,13 @@
                 <li>
                     <a href="Dashboard.html" class="nav-link px-3">
                         <span class="me-2"><i class="bi bi-graph-up"></i></span>
-                        <span>Marketing Department Questions</span>
+                        <span>Marketing Department</span>
                     </a>
                 </li>
                 <li>
                     <a href="Dashboard2.html" class="nav-link px-3">
                         <span class="me-2"><i class="bi bi-table"></i></span>
-                        <span>Management Questions</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="Dashboard3.html" class="nav-link px-3">
-                        <span class="me-2"><i class="bi bi-graph-down"></i></span>
-                        <span>Research Questions</span>
+                        <span>Management & Research</span>
                     </a>
                 </li>
 
@@ -147,7 +141,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4><B>Welcome to the Research Dashboard!</B></h4>
+                <h4><B>Welcome to the Management Dashboard!</B></h4>
             </div>
         </div>
         <div class="row">
@@ -164,7 +158,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card bg-secondary text-white h-100">
-                    <div class="card-body py-5"><b>Approval By Age/Country</b></div>
+                    <div class="card-body py-5"><b>Ratings and Claims by Age</b></div>
                     <div id="approvalByAgeBtn" style="cursor: pointer" class="card-footer d-flex">
                         View Details
                         <span class="ms-auto">
@@ -175,7 +169,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card bg-secondary text-white h-100">
-                    <div class="card-body py-5"><b>Insurance Reasons & Approval %</b></div>
+                    <div class="card-body py-5"><b>Quarterly Data</b></div>
                     <div id="agentsAndApprovalsBtn" style="cursor: pointer" class="card-footer d-flex">
                         View Details
                         <span class="ms-auto">
@@ -201,7 +195,9 @@
                             <span id="rightChart" class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
                         </div>
                         <div class="card-body">
-                            <canvas id="pieChart" width="400" height="200"></canvas>
+                            <div class="bong">
+                                <canvas id="pieChart" width="400" height="200"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>

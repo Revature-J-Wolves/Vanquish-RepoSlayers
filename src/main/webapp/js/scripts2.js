@@ -1,9 +1,25 @@
 // ---------------------------
 // Event Handlers for Buttons
 // ---------------------------
-document.getElementById("getAllClaims").addEventListener("click", getAllClaims);
-document.getElementById("approvalByAgeBtn").addEventListener("click", getClaimsByCountry);
-document.getElementById("agentsAndApprovalsBtn").addEventListener("click", getClaimsByReason);
+document.getElementById("getAllClaims").addEventListener("click", Button1);
+document.getElementById("approvalByAgeBtn").addEventListener("click", Button2);
+document.getElementById("agentsAndApprovalsBtn").addEventListener("click", Button3);
+
+
+function Button1(){ window.location.href = "http://localhost:8080/Button1.html";}
+function Button2(){ window.location.href = "http://localhost:8080/Button2.html";}
+function Button3(){ window.location.href = "http://localhost:8080/Button3.html";}
+
+if(window.location.href == "http://localhost:8080/Button1.html"){
+window.onload = getAllClaims;
+}
+if(window.location.href == "http://localhost:8080/Button2.html"){
+window.onload = getClaimsByCountry;
+}
+if(window.location.href == "http://localhost:8080/Button3.html"){
+window.onload = getClaimsByReason;
+}
+
 
 // ---------------------------
 // Get all claims first button
@@ -290,7 +306,7 @@ function getClaimsByCountry() {
                 "Over 50 Denial Rate",
                 "Under 50 Approval Rate",
                 "Under 50 Denial Rate",
-                "Top Insurance Reason",
+                //"Top Insurance Reason",
                 "Total # Claims"
             ];
 
@@ -403,9 +419,9 @@ function getClaimsByCountry() {
                 let under50Denial = document.createElement("td");
                 under50Denial.innerHTML = (under50Denials[i] == 0) ? "0%" : ((under50Denials[i] / totalClaims[i]) * 100).toFixed(0) + "%";
                 row.appendChild(under50Denial);
-                let topReason = document.createElement("td");
-                topReason.innerHTML = reason[i];
-                row.appendChild(topReason);
+               // let topReason = document.createElement("td");
+               // topReason.innerHTML = reason[i];
+               //row.appendChild(topReason);
                 let totalClaim = document.createElement("td");
                 totalClaim.innerHTML = totalClaims[i];
                 row.appendChild(totalClaim);
