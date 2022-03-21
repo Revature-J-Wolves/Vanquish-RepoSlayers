@@ -50,8 +50,8 @@ public class Claim {
    // @Column(name = "failure_reason")
    // private String failureReason;
 
-   // @Column(name = "reason")
-  //  private String reason;
+    @Column(name = "reason")
+    private String reason;
 
     @Column(name = "approval")
     private String approval;
